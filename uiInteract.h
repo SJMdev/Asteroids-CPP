@@ -46,7 +46,7 @@ public:
    int  isUp()        const { return isUpPress;    }
    int  isLeft()      const { return isLeftPress;  }
    int  isRight()     const { return isRightPress; }
-   bool isSpace()     const { return isSpacePress; }
+   int isSpace()     const { return isSpacePress; }
    
    static void *p;                   // for client
    static void (*callBack)(const Interface *, void *);
@@ -73,6 +73,7 @@ private:
    friend void keyDownCallback( int           key, int x, int y);
    friend void keyUpCallback(   int           key, int x, int y);
    friend void keyboardCallback(unsigned char key, int x, int y);
+   friend void keyboardUpCallback(unsigned char key, int x, int y);
    friend void drawCallback();
    
    // Current frame rate
@@ -88,7 +89,7 @@ private:
    static int  isUpPress;            //    "   up         "
    static int  isLeftPress;          //    "   left       "
    static int  isRightPress;         //    "   right      "
-   static bool isSpacePress;         //    "   space      "
+   static int isSpacePress;         //    "   space      "
 };
 
 /************************************************************************

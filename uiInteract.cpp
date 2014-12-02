@@ -118,8 +118,9 @@ void drawCallback()
    if (ui.isLeftPress)
       ui.isLeftPress++;
    if (ui.isRightPress)
-      ui.isRightPress++;
-   ui.isSpacePress = false;
+	   ui.isRightPress++;
+   if (ui.isSpacePress)
+	   ui.isSpacePress++;
 }
 
 /************************************************************************
@@ -188,23 +189,41 @@ void keyUpCallback(int key, int x, int y)
 }
 
 /***************************************************************
- * KEYBOARD CALLBACK
- * Generic callback to a regular ascii keyboard event, such as
- * the space bar or the letter 'q'
- ***************************************************************/
+* KEYBOARD CALLBACK
+* Generic callback to a regular ascii keyboard event, such as
+* the space bar or the letter 'q'
+***************************************************************/
 void keyboardCallback(unsigned char key, int x, int y)
 {
-   // Even though this is a local variable, all the members are static
-   // so we are actually getting the same version as in the constructor.
-   Interface ui;
-   switch (key)
-   {
-      case ' ':
-         assert(ui.isSpacePress == false);
-         ui.isSpacePress = true;
-         break;
-      // if you want another key event, add a case statement here.
-   }
+	// Even though this is a local variable, all the members are static
+	// so we are actually getting the same version as in the constructor.
+	Interface ui;
+	switch (key)
+	{
+	case ' ':
+		ui.isSpacePress = 1;
+		break;
+		// if you want another key event, add a case statement here.
+	}
+}
+
+/***************************************************************
+* KEYBOARD CALLBACK
+* Generic callback to a regular ascii keyboard event, such as
+* the space bar or the letter 'q'
+***************************************************************/
+void keyboardUpCallback(unsigned char key, int x, int y)
+{
+	// Even though this is a local variable, all the members are static
+	// so we are actually getting the same version as in the constructor.
+	Interface ui;
+	switch (key)
+	{
+	case ' ':
+		ui.isSpacePress = 0;
+		break;
+		// if you want another key event, add a case statement here.
+	}
 }
 
 /************************************************************************
@@ -248,7 +267,7 @@ int          Interface::isDownPress  = 0;
 int          Interface::isUpPress    = 0;
 int          Interface::isLeftPress  = 0;
 int          Interface::isRightPress = 0;
-bool         Interface::isSpacePress = false;
+int          Interface::isSpacePress = 0;
 bool         Interface::initialized  = false;
 double       Interface::timePeriod   = 1.0 / 30; // default to 30 frames/second
 unsigned int Interface::nextTick     = 0;        // redraw now please
@@ -301,7 +320,8 @@ void Interface::initialize(int argc, char ** argv, const char * title)
    // register the callbacks so OpenGL knows how to call us
    glutDisplayFunc(   drawCallback    );
    glutIdleFunc(      drawCallback    );
-   glutKeyboardFunc(  keyboardCallback);
+   glutKeyboardFunc(keyboardCallback);
+   glutKeyboardUpFunc(keyboardUpCallback);
    glutSpecialFunc(   keyDownCallback );
    glutSpecialUpFunc( keyUpCallback   );
    initialized = true;

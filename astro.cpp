@@ -38,7 +38,7 @@ void Astro::processFrame(const Interface *pUI)
 }
 
 // *************************************************************************** 
-void Astro::handleUI(const Interface *pUI)
+void Astro::handleUI(const Interface *pUI) 
 {
 	if (pUI->isRight())
 		ship->rotateRight();
@@ -46,7 +46,7 @@ void Astro::handleUI(const Interface *pUI)
 	if (pUI->isLeft())
 		ship->rotateLeft();
 
-	if (pUI->isUp() || pUI->isSpace())
+	if ((pUI->isUp() || pUI->isSpace()) && (pUI->isSpace() % 5 == 0))
 		shoot();
 
 	if (pUI->isDown())
@@ -62,6 +62,15 @@ void Astro::moveItems()
 	ship->move();
 
 	// Todo - Bullets
+	vector<int> bulletsToDelete;
+	for (int i = 0; i < bullets.size(); i++)
+	{
+		bullets[i].moveBullet();
+		if (bullets[i].readyToDie())
+			bulletsToDelete.push_back(i);
+	}
+	for (int i = 0; i < bulletsToDelete.size(); i++)
+		bullets.erase(bullets.begin() + bulletsToDelete[i]);
 
 	// Todo - Rocks
 	for (int i = 0; i < asteroids.size(); i++)
@@ -79,6 +88,10 @@ void Astro::drawItems()
 	ship->draw();
 
 	// Todo - Draw Bullets
+	for (int i = 0; i < bullets.size(); i++)
+	{
+		bullets[i].draw();
+	}
 
 	// ToDo - Draw Rocks
 	for (int i = 0; i < asteroids.size(); i++)
@@ -113,11 +126,13 @@ void Astro::startGame()
 // *************************************************************************** 
 void Astro::shoot()
 {
-   // Todo - Get centre of ship
+	int x = this->ship->getX();
+	int y = this->ship->getY();
+	double dx = this->ship->getDX();
+	double dy = this->ship->getDY();
 
-   // Todo - get rotation of ship
-
-   // create bullet
+	//Randomly set one of the axis to max so that it comes onto the screen
+	this->bullets.push_back(Bullet(x, y, dx, dy, this->ship->getRotation()));
 }
 
 // *************************************************************************** 

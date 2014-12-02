@@ -3,6 +3,7 @@
 #include "ship.h"
 #include "asteroid.h"
 #include "uiInteract.h"
+#include "bullet.h"
 
 #include <vector>
 using namespace std;
@@ -19,6 +20,7 @@ private:
 	Ship			*ship;
 	// TODO - another stuff the game has
 	vector<Asteroid> asteroids;
+	vector<Bullet> bullets;
 
 	void startGame();
 
