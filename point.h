@@ -22,9 +22,9 @@ class Point
 public:
    // constructors
    Point()            : x(0.0), y(0.0),
-                        check(false), dead(false), wrap(true)   {}
+                        check(false), dead(false), wrap(false)   {}
    Point(bool check)  : x(0.0), y(0.0),
-                        check(check), dead(false), wrap(true)   {}
+                        check(check), dead(false), wrap(false)   {}
    Point(double x, double y);
    Point(const Point & point) { *this = point; }
 

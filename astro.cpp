@@ -153,7 +153,7 @@ void Astro::launchAsteroid()
 	double dy = (rand() % 2 + 1.0) * dyN;
 	double dx = (rand() % 2 + 1.0) * dxN;
 	this->asteroids.push_back(Asteroid(x, y, dx, dy));
-	cout << "(" << x << "," << y << ") was sent to [" << dx << "," << dy << "]" << endl;
+	//cout << "(" << x << "," << y << ") was sent to [" << dx << "," << dy << "]" << endl;
 }
 
 

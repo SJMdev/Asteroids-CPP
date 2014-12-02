@@ -33,7 +33,7 @@ const Path & Path::operator = (const Path & rhs)
    setY(rhs.getY());
    setDx(rhs.getDx());
    setDy(rhs.getDy());
-   //setWrap(rhs.getWrap());
+   setWrap(rhs.getWrap());
    setCheck(rhs.getCheck());
 
    return *this;
@@ -46,7 +46,7 @@ const Path & Path::operator = (const Point & rhs)
 {
    setX(rhs.getX());
    setY(rhs.getY());
-   //setWrap(rhs.getWrap());
+  setWrap(rhs.getWrap());
    setCheck(rhs.getCheck());
 
    return *this;
