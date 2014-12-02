@@ -34,6 +34,7 @@ private:
 	void launchAsteroid();
 	void determineLuanchAsteroid();
 	int waitCounter;
+	int nextLaunchAsteroidTime;
 
 	// TODO - Collide function(s)
 };

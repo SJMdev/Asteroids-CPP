@@ -7,14 +7,14 @@
 class Moveable
 {
 public:
-	Moveable(int x, int y, double dx, double dy) : path()
+	Moveable(int x, int y, double dx, double dy, bool wrap) : path()
 	{
 		path.setX((double)x);
 		path.setY((double)y);
 		path.setDx(dx);
 		path.setDy(dy);
 
-		path.setWrap(true);
+		path.setWrap(wrap);
 	};
 
 	~Moveable()							{};

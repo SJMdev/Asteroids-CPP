@@ -4,7 +4,7 @@
 #include <cmath>
 
 // ************************************************************************
-Astro::Astro() : waitCounter(0)
+Astro::Astro() : waitCounter(0), nextLaunchAsteroidTime(0)
 {
 	startGame();
 }
@@ -64,9 +64,9 @@ void Astro::moveItems()
 	// Todo - Bullets
 
 	// Todo - Rocks
-	for each(Asteroid asteroid in this->asteroids)
+	for (int i = 0; i < asteroids.size(); i++)
 	{
-		asteroid.move();
+		asteroids[i].move();
 	}
 
 	// ToDo - anything else
@@ -81,8 +81,10 @@ void Astro::drawItems()
 	// Todo - Draw Bullets
 
 	// ToDo - Draw Rocks
-	for each(Asteroid asteroid in this->asteroids)
-		asteroid.draw();
+	for (int i = 0; i < asteroids.size(); i++)
+	{
+		asteroids[i].draw();
+	}
 
 	// ToDo - any thing else
 }
@@ -127,19 +129,40 @@ void Astro::rocketBurst()
 
 void Astro::launchAsteroid()
 {
-	Asteroid newAsteroid = Asteroid(10, 10, 10, 10);
-	this->asteroids.push_back(newAsteroid);
-	std::cout << "New asteroid created";
+	int x = rand() % (int)Point::xMax + 1;
+	int y = rand() % (int)Point::yMax + 1;
+	int dxN = 1;
+	int dyN = 1;
+	//Randomly set one of the axis to max so that it comes onto the screen
+	if (x > y)
+	{
+		x = (int)Point::xMax * pow(-1, (int)(rand() % 2 + 1));
+	}
+	else
+	{
+		y = (int)Point::yMax * pow(-1, (int)(rand() % 2 + 1));
+	}
+	if (x > 0)
+	{
+		dxN = -1;
+	}
+	if (y > 0)
+	{
+		dyN = -1;
+	}
+	double dy = (rand() % 2 + 1.0) * dyN;
+	double dx = (rand() % 2 + 1.0) * dxN;
+	this->asteroids.push_back(Asteroid(x, y, dx, dy));
+	cout << "(" << x << "," << y << ") was sent to [" << dx << "," << dy << "]" << endl;
 }
 
 
 void Astro::determineLuanchAsteroid()
 {
-	if (this->waitCounter % 100 == 0)
+	if (waitCounter >= nextLaunchAsteroidTime)
 	{
 		launchAsteroid();
+		int randNum = rand() % 100;
+		nextLaunchAsteroidTime += randNum;
 	}
 }
-
-
-

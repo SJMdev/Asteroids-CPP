@@ -6,7 +6,7 @@
 class Ship : public Moveable
 {
 public:
-	Ship(int x, int y, double dx, double dy) : Moveable(x, y, dx, dy), rotation(0)    {};
+	Ship(int x, int y, double dx, double dy) : Moveable(x, y, dx, dy, true), rotation(0)    {};
 	~Ship()					{};
 
 	void draw();

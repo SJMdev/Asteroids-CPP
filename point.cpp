@@ -31,7 +31,7 @@ void Point::setX(double x)
 {
    assert(xMin < xMax);
 
-//   std::cout << "Wrap = " << wrap << std::endl;
+   //std::cout << "Wrap = " << wrap << std::endl;
 
    // wrap as necessary
    if (wrap)
