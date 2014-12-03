@@ -17,7 +17,7 @@
  * Initialize the point to the passed position
  *****************************************/
 Point::Point(double x, double y) : x(0.0), y(0.0),
-                                 check(true), dead(false), wrap(false)
+                                 check(false), dead(false), wrap(false)
 {
    setX(x);
    setY(y);
