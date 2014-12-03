@@ -14,13 +14,6 @@ void Bullet::draw()
 
 void Bullet::moveBullet()
 {
-	if (movesCounter >= 250)
-	{
-		this->path.kill();
-	}
-	else
-	{
-		this->move();
-	}
+	this->move();
 	movesCounter++;
 }

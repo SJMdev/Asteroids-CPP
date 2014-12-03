@@ -83,30 +83,31 @@ void Astro::moveItems()
 	ship->move();
 
 	// Todo - Bullets
-	vector<int> bulletsToDelete;
+
+	if (!bullets.empty())
+	{
+		if (bullets[0].readyToDie())
+		{
+			bullets.erase(bullets.begin());
+		}
+	}
 	for (int i = 0; i < bullets.size(); i++)
 	{
 		bullets[i].moveBullet();
-		if (bullets[i].readyToDie())
-			bulletsToDelete.push_back(i);
 	}
-	for (int i = 0; i < bulletsToDelete.size(); i++)
-		bullets.erase(bullets.begin() + bulletsToDelete[i]);
+	
 
 	// Todo - Rocks
-	vector<int> asteroidsToDelete;
+	if (!asteroids.empty())
+	{
+		if (asteroids[0].readyToDie())
+		{
+			asteroids.erase(asteroids.begin() + 0);
+		}
+	}
 	for (int i = 0; i < asteroids.size(); i++)
 	{
 		asteroids[i].move();
-		if (asteroids[i].readyToDie())
-		{
-			asteroidsToDelete.push_back(i);
-		}
-	}
-	for (int i = 0; i < asteroidsToDelete.size(); i++)
-	{
-		cout << "Asteroid[" << asteroidsToDelete[i] << "] deleted" << endl;
-		asteroids.erase(asteroids.begin() + asteroidsToDelete[i]);
 	}
 
 	// ToDo - anything else
