@@ -29,6 +29,7 @@ private:
 	void handleUI(const Interface *pUI);
 	void moveItems();
 	void drawItems();
+	void determineHitAsteroids();
 
 	// Ship functions
 	void shoot();

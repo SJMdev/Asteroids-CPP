@@ -9,5 +9,5 @@ using namespace std;
 // *************************************************************************** 
 void Asteroid::draw()
 {
-	drawCircle(path.getPoint(), 8);
+	drawCircle(path.getPoint(), this->radius);
 }

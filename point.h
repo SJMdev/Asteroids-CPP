@@ -22,7 +22,7 @@ class Point
 public:
    // constructors
    Point()            : x(0.0), y(0.0),
-                        check(false), dead(false), wrap(false)   {}
+                        check(true), dead(false), wrap(false)   {}
    Point(bool check)  : x(0.0), y(0.0),
                         check(check), dead(false), wrap(false)   {}
    Point(double x, double y);

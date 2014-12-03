@@ -9,7 +9,7 @@ using namespace std;
 // *************************************************************************** 
 void Bullet::draw()
 {
-	drawCircle(path.getPoint(), 2);
+	drawCircle(path.getPoint(), this->getRadius() );
 }
 
 void Bullet::moveBullet()

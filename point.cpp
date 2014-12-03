@@ -17,7 +17,7 @@
  * Initialize the point to the passed position
  *****************************************/
 Point::Point(double x, double y) : x(0.0), y(0.0),
-                                 check(false), dead(false), wrap(false)
+                                 check(true), dead(false), wrap(false)
 {
    setX(x);
    setY(y);
@@ -45,11 +45,16 @@ void Point::setX(double x)
 
    // trivial non-checking assignment
    else if (!check || (x >= xMin && x <= xMax))
-      this->x = x;
+   {
+	   this->x = x;
+   }
 
    // of the screen
    else
-      dead = true;
+   {
+	   dead = true;
+	   std::cout << "this is dead off the screen" << std::endl;
+   }
 }
 
 /********************************************
@@ -86,11 +91,16 @@ void Point::setY(double y)
 
    // trivial non-checking assignment
    else if (!check || (y >= yMin && y <= yMax))
-      this->y = y;
+   {
+	   this->y = y;
+   }
 
    // of the screen
    else
-      dead = true;
+   {
+	   dead = true;
+	   std::cout << "this is dead off the screen" << std::endl;
+   }
    
 }
 

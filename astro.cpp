@@ -27,6 +27,8 @@ void Astro::processFrame(const Interface *pUI)
 	// Move items
 	moveItems();
 
+	determineHitAsteroids();
+
 	// TODO - Handle stuff hitting each other
 	//      - detect bullets hitting rocks
 	//      - dead bullets
@@ -35,6 +37,25 @@ void Astro::processFrame(const Interface *pUI)
 	drawItems();
 
 	this->waitCounter++;
+}
+
+double distance(double dX0, double dY0, double dX1, double dY1)
+{
+	return sqrt((dX1 - dX0)*(dX1 - dX0) + (dY1 - dY0)*(dY1 - dY0));
+}
+
+void Astro::determineHitAsteroids()
+{
+	for (int i = 0; i < bullets.size(); i++)
+	{
+		for (int j = 0; j < asteroids.size(); j++)
+		{
+			if (distance(bullets[i].getX(), bullets[i].getY(), asteroids[i].getX(), asteroids[i].getY()) <= (bullets[i].getRadius() + asteroids[i].getRadius()))
+			{
+				cout << "HIT!!!!!!!!!!!" << endl;
+			}
+		}
+	}
 }
 
 // *************************************************************************** 
@@ -46,7 +67,7 @@ void Astro::handleUI(const Interface *pUI)
 	if (pUI->isLeft())
 		ship->rotateLeft();
 
-	if ((pUI->isUp() || pUI->isSpace()) && (pUI->isSpace() % 5 == 0))
+	if ((pUI->isUp() || pUI->isSpace()) && (pUI->isSpace() % 5 == 0 || pUI->isSpace() == 1))
 		shoot();
 
 	if (pUI->isDown())
@@ -73,9 +94,19 @@ void Astro::moveItems()
 		bullets.erase(bullets.begin() + bulletsToDelete[i]);
 
 	// Todo - Rocks
+	vector<int> asteroidsToDelete;
 	for (int i = 0; i < asteroids.size(); i++)
 	{
 		asteroids[i].move();
+		if (asteroids[i].readyToDie())
+		{
+			asteroidsToDelete.push_back(i);
+		}
+	}
+	for (int i = 0; i < asteroidsToDelete.size(); i++)
+	{
+		cout << "Asteroid[" << asteroidsToDelete[i] << "] deleted" << endl;
+		asteroids.erase(asteroids.begin() + asteroidsToDelete[i]);
 	}
 
 	// ToDo - anything else

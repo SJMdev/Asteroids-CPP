@@ -4,7 +4,7 @@
 class Bullet : public Moveable
 {
 public:
-	Bullet(int x, int y, double dx, double dy, int rotation) : Moveable(x, y, dx, dy, true), movesCounter(0)
+	Bullet(int x, int y, double dx, double dy, int rotation) : Moveable(x, y, dx, dy, true), movesCounter(0), radius(2)
 	{
 		double rotx = cos(deg2rad(rotation)) * 2;
 		double roty = sin(deg2rad(rotation)) * 2;
@@ -18,8 +18,9 @@ public:
 
 	void moveBullet();
 	bool readyToDie() { return this->path.isDead(); }
-
+	int getRadius() { return this->radius; }
 private:
 	int movesCounter;
+	int radius;
 };
 
