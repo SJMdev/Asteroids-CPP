@@ -21,8 +21,10 @@ class Point
 {
 public:
    // constructors
-   Point()            : x(0.0), y(0.0),
-                        check(true), dead(false), wrap(false)   {}
+	Point(int objectX, int objectY) : x(0.0), y(0.0),
+		check(true), dead(false), wrap(false), objectX(objectX), objectY(objectY)   {}
+	Point() : x(0.0), y(0.0),
+		check(true), dead(false), wrap(false), objectX(0), objectY(0)   {}
    Point(bool check)  : x(0.0), y(0.0),
                         check(check), dead(false), wrap(false)   {}
    Point(double x, double y);
@@ -64,6 +66,8 @@ private:
    bool  check;       // do bounds checking
    bool  dead;        // have we exceed our bounds?
    bool  wrap;        // do we wrap around the edge?
+   int objectX;
+   int objectY;
 };
 
 // stream I/O useful for debugging

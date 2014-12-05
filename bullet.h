@@ -17,8 +17,9 @@ public:
 	void draw();
 
 	void moveBullet();
-	bool readyToDie() { return this->path.isDead(); }
-	int getRadius() { return this->radius; }
+	bool readyToDie() { return this->movesCounter > Point::xMax - 10; }
+	int getRadius() { return radius; }
+	int getMovesCounter() { return this->movesCounter; }
 private:
 	int movesCounter;
 	int radius;

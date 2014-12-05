@@ -50,10 +50,20 @@ void Astro::determineHitAsteroids()
 	{
 		for (int j = 0; j < asteroids.size(); j++)
 		{
-			if (distance(bullets[i].getX(), bullets[i].getY(), asteroids[i].getX(), asteroids[i].getY()) <= (bullets[i].getRadius() + asteroids[i].getRadius()))
+			if (distance(bullets[i].getX(), bullets[i].getY(), asteroids[j].getX(), asteroids[j].getY()) <= (bullets[i].getRadius() + asteroids[j].getRadius()))
 			{
-				cout << "HIT!!!!!!!!!!!" << endl;
+				asteroids.erase(asteroids.begin() + j);
+				bullets.erase(bullets.begin() + i);
+				break;
 			}
+		}
+	}
+	for (int j = 0; j < asteroids.size(); j++)
+	{
+		if (distance(ship->getX(), ship->getY(), asteroids[j].getX(), asteroids[j].getY()) <= (10 + asteroids[j].getRadius()))
+		{
+			cout << "GAME OVER";
+			delete ship;
 		}
 	}
 }
@@ -98,16 +108,20 @@ void Astro::moveItems()
 	
 
 	// Todo - Rocks
-	if (!asteroids.empty())
-	{
-		if (asteroids[0].readyToDie())
-		{
-			asteroids.erase(asteroids.begin() + 0);
-		}
-	}
+	vector<int> asteroidsToDelete;
 	for (int i = 0; i < asteroids.size(); i++)
 	{
 		asteroids[i].move();
+		if (asteroids[i].readyToDie())
+		{
+			asteroidsToDelete.push_back(i);
+			asteroids[i].getPath().resurrect();
+		}
+	}
+
+	for (int i = 0; i < asteroidsToDelete.size(); i++)
+	{
+		asteroids.erase(asteroids.begin() + asteroidsToDelete[i] - i);
 	}
 
 	// ToDo - anything else
@@ -164,6 +178,7 @@ void Astro::shoot()
 	double dy = this->ship->getDY();
 
 	//Randomly set one of the axis to max so that it comes onto the screen
+	static int id;
 	this->bullets.push_back(Bullet(x, y, dx, dy, this->ship->getRotation()));
 }
 
@@ -199,7 +214,8 @@ void Astro::launchAsteroid()
 	}
 	double dy = (rand() % 2 + 1.0) * dyN;
 	double dx = (rand() % 2 + 1.0) * dxN;
-	this->asteroids.push_back(Asteroid(x, y, dx, dy));
+	static int id;
+	this->asteroids.push_back(Asteroid(x, y, dx, dy, id++, 8, 8));
 	//cout << "(" << x << "," << y << ") was sent to [" << dx << "," << dy << "]" << endl;
 }
 

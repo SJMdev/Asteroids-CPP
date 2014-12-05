@@ -7,7 +7,17 @@
 class Moveable
 {
 public:
-	Moveable(int x, int y, double dx, double dy, bool wrap) : path()
+	Moveable(int x, int y, double dx, double dy, bool wrap) : path(0, 0)
+	{
+		path.setX((double)x);
+		path.setY((double)y);
+		path.setDx(dx);
+		path.setDy(dy);
+
+		path.setWrap(wrap);
+	};
+
+	Moveable(int x, int y, double dx, double dy, bool wrap, int objectX, int objectY) : path(objectX, objectY)
 	{
 		path.setX((double)x);
 		path.setY((double)y);
@@ -29,6 +39,7 @@ public:
 
 	virtual void draw() = 0;
 	void move()							{ path++; };
+	Path & getPath() { return this->path; }
 
 protected:
 	Path path;

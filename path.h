@@ -30,7 +30,7 @@ class Path : public Point
 {
 public:
    // constructors
-   Path() :        Point(), dx(0.0), dy(0.0) {              }
+   Path(int objectX, int objectY) :   Point(objectX, objectY), dx(0.0), dy(0.0) {              }
    Path(const Path &rhs)                     { *this = rhs; }
    Path(const Point &rhs) : dx(0.0), dy(0.0) { *this = rhs; }
 
