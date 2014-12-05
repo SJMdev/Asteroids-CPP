@@ -8,6 +8,8 @@
 #include <vector>
 using namespace std;
 
+enum GAME_SATES { IN_PLAY, GAME_OVER };
+
 class Astro
 {
 public:
@@ -38,6 +40,7 @@ private:
 	void determineLuanchAsteroid();
 	int waitCounter;
 	int nextLaunchAsteroidTime;
+	int state;
 
 	// TODO - Collide function(s)
 };

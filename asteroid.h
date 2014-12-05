@@ -11,7 +11,7 @@ public:
 	~Asteroid()					{ };
 
 	void draw();
-	bool readyToDie() { if (this->path.isDead()) { std::cout << "\n<" << id << "> is ready to die\n";  } return this->path.isDead(); }
+	bool readyToDie() { return this->path.isDead(); }
 	int getRadius() { return this->radius; }
 	int id;
 private:

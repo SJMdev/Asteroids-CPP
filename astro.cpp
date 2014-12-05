@@ -4,7 +4,7 @@
 #include <cmath>
 
 // ************************************************************************
-Astro::Astro() : waitCounter(0), nextLaunchAsteroidTime(0)
+Astro::Astro() : waitCounter(0), nextLaunchAsteroidTime(0), state(IN_PLAY)
 {
 	startGame();
 }
@@ -18,24 +18,27 @@ Astro::~Astro()
 // ************************************************************************
 void Astro::processFrame(const Interface *pUI)
 {
-	// Handle UI
-	handleUI(pUI);
+	//Make a stateful logic statement here that says "if game is in play", "if game is in menu", "if game is over"
+	if (state == IN_PLAY)
+	{
+		// Handle UI
+		handleUI(pUI);
 
-	//Create asteroids if time permits
-	this->determineLuanchAsteroid();
+		//Create asteroids if time permits
+		this->determineLuanchAsteroid();
 
-	// Move items
-	moveItems();
+		// Move items
+		moveItems();
 
-	determineHitAsteroids();
+		determineHitAsteroids();
 
-	// TODO - Handle stuff hitting each other
-	//      - detect bullets hitting rocks
-	//      - dead bullets
+		// TODO - Handle stuff hitting each other
+		//      - detect bullets hitting rocks
+		//      - dead bullets
 
-	// Draw stuff
-	drawItems();
-
+		// Draw stuff
+		drawItems();
+	}
 	this->waitCounter++;
 }
 
@@ -63,7 +66,7 @@ void Astro::determineHitAsteroids()
 		if (distance(ship->getX(), ship->getY(), asteroids[j].getX(), asteroids[j].getY()) <= (10 + asteroids[j].getRadius()))
 		{
 			cout << "GAME OVER";
-			delete ship;
+			state = GAME_OVER;
 		}
 	}
 }
