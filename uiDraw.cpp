@@ -225,27 +225,37 @@ void drawRect(const Point & center, int width, int height, int rotation)
 }
 
 /************************************************************************
- * DRAW CIRCLE
- * Draw a circle from a given location (center) of a given size (radius).
- *  INPUT   center   Center of the circle
- *          radius   Size of the circle
- *************************************************************************/
+* DRAW CIRCLE
+* Draw a circle from a given location (center) of a given size (radius).
+*  INPUT   center   Center of the circle
+*          radius   Size of the circle
+*************************************************************************/
 void drawCircle(const Point & center, int radius)
 {
-   assert(radius > 1.0);
-   const double increment = 1.0 / (double)radius;
+	drawCircle(center, radius, 1.0, 1.0, 1.0);
+}
 
-   // begin drawing
-   glBegin(GL_LINE_LOOP);
+/************************************************************************
+* DRAW CIRCLE
+* Draw a circle from a given location (center) of a given size (radius).
+*  INPUT   center   Center of the circle
+*          radius   Size of the circle
+*************************************************************************/
+void drawCircle(const Point & center, int radius, double r, double g, double b)
+{
+	assert(radius > 1.0);
+	const double increment = 1.0 / (double)radius;
 
-   // go around the circle
-   for (double radians = 0; radians < M_PI * 2.0; radians += increment)
-      glVertex2f(center.getX() + (radius * cos(radians)),
-                 center.getY() + (radius * sin(radians)));
-   
-   // complete drawing
-   glEnd();
-   
+	// begin drawing
+	glBegin(GL_LINE_LOOP);
+	glColor3f(r /* red % */, g /* green % */, b /* blue % */);
+	// go around the circle
+	for (double radians = 0; radians < M_PI * 2.0; radians += increment)
+		glVertex2f(center.getX() + (radius * cos(radians)),
+		center.getY() + (radius * sin(radians)));
+	glColor3f(1.0, 1.0, 1.0); // reset to white
+	// complete drawing
+	glEnd();
 }
 
 /************************************************************************
