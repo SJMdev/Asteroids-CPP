@@ -36,7 +36,10 @@ private:
 	// Ship functions
 	void shoot();
 	void rocketBurst();
+
 	void launchAsteroid();
+	void launchAsteroid(double x, double y, int size);
+
 	void determineLuanchAsteroid();
 	int waitCounter;
 	int nextLaunchAsteroidTime;

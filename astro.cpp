@@ -3,6 +3,11 @@
 #include "asteroid.h"
 #include <cmath>
 
+#define ASTEROID_BIG_RADIUS 10
+#define ASTEROID_MEDIUM_RADIUS 6
+#define ASTEROID_LITTLE_RADIUS 3
+
+
 // ************************************************************************
 Astro::Astro() : waitCounter(0), nextLaunchAsteroidTime(0), state(IN_PLAY)
 {
@@ -49,18 +54,33 @@ double distance(double dX0, double dY0, double dX1, double dY1)
 
 void Astro::determineHitAsteroids()
 {
+	//Determine if bullets hit any asteroids
 	for (int i = 0; i < bullets.size(); i++)
 	{
 		for (int j = 0; j < asteroids.size(); j++)
 		{
 			if (distance(bullets[i].getX(), bullets[i].getY(), asteroids[j].getX(), asteroids[j].getY()) <= (bullets[i].getRadius() + asteroids[j].getRadius()))
 			{
+				//Split up big asteroids
+				if (asteroids[j].getRadius() == ASTEROID_BIG_RADIUS)
+				{
+					launchAsteroid(asteroids[j].getX(), asteroids[j].getY(), ASTEROID_MEDIUM_RADIUS);
+					launchAsteroid(asteroids[j].getX(), asteroids[j].getY(), ASTEROID_MEDIUM_RADIUS);
+				}
+				else if (asteroids[j].getRadius() == ASTEROID_MEDIUM_RADIUS)
+				{
+					launchAsteroid(asteroids[j].getX(), asteroids[j].getY(), ASTEROID_LITTLE_RADIUS);
+					launchAsteroid(asteroids[j].getX(), asteroids[j].getY(), ASTEROID_LITTLE_RADIUS);
+					launchAsteroid(asteroids[j].getX(), asteroids[j].getY(), ASTEROID_LITTLE_RADIUS);
+				}
 				asteroids.erase(asteroids.begin() + j);
 				bullets.erase(bullets.begin() + i);
 				break;
 			}
 		}
 	}
+
+	//Determine if ship is hit or not
 	for (int j = 0; j < asteroids.size(); j++)
 	{
 		if (distance(ship->getX(), ship->getY(), asteroids[j].getX(), asteroids[j].getY()) <= (10 + asteroids[j].getRadius()))
@@ -196,8 +216,6 @@ void Astro::launchAsteroid()
 {
 	int x = rand() % (int)Point::xMax + 1;
 	int y = rand() % (int)Point::yMax + 1;
-	int dxN = 1;
-	int dyN = 1;
 	//Randomly set one of the axis to max so that it comes onto the screen
 	if (x > y)
 	{
@@ -207,6 +225,13 @@ void Astro::launchAsteroid()
 	{
 		y = (int)Point::yMax * pow(-1, (int)(rand() % 2 + 1));
 	}
+	launchAsteroid(x, y, ASTEROID_BIG_RADIUS);
+}
+
+void Astro::launchAsteroid(double x, double y, int size)
+{
+	int dxN = 1;
+	int dyN = 1;
 	if (x > 0)
 	{
 		dxN = -1;
@@ -218,7 +243,7 @@ void Astro::launchAsteroid()
 	double dy = (rand() % 2 + 1.0) * dyN;
 	double dx = (rand() % 2 + 1.0) * dxN;
 	static int id;
-	this->asteroids.push_back(Asteroid(x, y, dx, dy, id++, 8, 8));
+	this->asteroids.push_back(Asteroid(x, y, dx, dy, id++, size, size));
 	//cout << "(" << x << "," << y << ") was sent to [" << dx << "," << dy << "]" << endl;
 }
 
