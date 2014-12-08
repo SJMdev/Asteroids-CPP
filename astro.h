@@ -20,7 +20,6 @@ public:
 
 private:
 	Ship			*ship;
-	// TODO - another stuff the game has
 	vector<Asteroid> asteroids;
 	vector<Bullet> bullets;
 
@@ -44,7 +43,5 @@ private:
 	int waitCounter;
 	int nextLaunchAsteroidTime;
 	int state;
-
-	// TODO - Collide function(s)
 };
 

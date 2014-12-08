@@ -13,8 +13,8 @@ public:
 	void draw();
 	bool readyToDie() { return this->path.isDead(); }
 	int getRadius() { return this->radius; }
-	int id;
 private:
 	int radius;
+	int id;
 };
 

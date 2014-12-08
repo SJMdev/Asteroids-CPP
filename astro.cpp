@@ -23,9 +23,10 @@ Astro::~Astro()
 // ************************************************************************
 void Astro::processFrame(const Interface *pUI)
 {
-	//Make a stateful logic statement here that says "if game is in play", "if game is in menu", "if game is over"
-	if (state == IN_PLAY)
+	static int gameOverCounter = 0;
+	switch (state)
 	{
+	case IN_PLAY:
 		// Handle UI
 		handleUI(pUI);
 
@@ -37,12 +38,26 @@ void Astro::processFrame(const Interface *pUI)
 
 		determineHitAsteroids();
 
-		// TODO - Handle stuff hitting each other
-		//      - detect bullets hitting rocks
-		//      - dead bullets
-
 		// Draw stuff
 		drawItems();
+
+		gameOverCounter = 0;
+		break;
+	case GAME_OVER:
+		drawText(Point(), "GAME OVER");
+		if (gameOverCounter == 0)
+		{
+			clearAll();
+			startGame();
+		}
+		else if (gameOverCounter >= 50)
+		{
+			state = IN_PLAY;
+		}
+		gameOverCounter++;
+		break;
+	default:
+		break;
 	}
 	this->waitCounter++;
 }
@@ -85,7 +100,6 @@ void Astro::determineHitAsteroids()
 	{
 		if (distance(ship->getX(), ship->getY(), asteroids[j].getX(), asteroids[j].getY()) <= (10 + asteroids[j].getRadius()))
 		{
-			cout << "GAME OVER";
 			state = GAME_OVER;
 		}
 	}
@@ -105,8 +119,6 @@ void Astro::handleUI(const Interface *pUI)
 
 	if (pUI->isDown())
 		rocketBurst();
-
-	// TODO - any other handling of keys
 }
 
 // *************************************************************************** 
@@ -115,8 +127,7 @@ void Astro::moveItems()
 	// Ship
 	ship->move();
 
-	// Todo - Bullets
-
+	//Bullets
 	if (!bullets.empty())
 	{
 		if (bullets[0].readyToDie())
@@ -130,7 +141,7 @@ void Astro::moveItems()
 	}
 	
 
-	// Todo - Rocks
+	//Asteroids
 	vector<int> asteroidsToDelete;
 	for (int i = 0; i < asteroids.size(); i++)
 	{
@@ -146,8 +157,6 @@ void Astro::moveItems()
 	{
 		asteroids.erase(asteroids.begin() + asteroidsToDelete[i] - i);
 	}
-
-	// ToDo - anything else
 }
 
 // *************************************************************************** 
@@ -156,19 +165,17 @@ void Astro::drawItems()
 	// Draw Ship
 	ship->draw();
 
-	// Todo - Draw Bullets
+	// Draw Bullets
 	for (int i = 0; i < bullets.size(); i++)
 	{
 		bullets[i].draw();
 	}
 
-	// ToDo - Draw Rocks
+	// Draw Rocks
 	for (int i = 0; i < asteroids.size(); i++)
 	{
 		asteroids[i].draw();
 	}
-
-	// ToDo - any thing else
 }
 
 // ************************************************************************
@@ -177,19 +184,15 @@ void Astro::clearAll()
 	// Delete the ship
 	delete ship;
 
-	// ToDo - delete anything else
+	asteroids.clear();
+	bullets.clear();
 }
 
 // ************************************************************************
 void Astro::startGame()
 {
-	// Clear all current items from the game
-	clearAll();
-
 	// Create ship in the centre
 	ship = new Ship(0, 0, 0, 0);
-
-	// ToDo - create anything else for the game
 }
 
 // *************************************************************************** 
@@ -216,16 +219,19 @@ void Astro::launchAsteroid()
 {
 	int x = rand() % (int)Point::xMax + 1;
 	int y = rand() % (int)Point::yMax + 1;
-	//Randomly set one of the axis to max so that it comes onto the screen
+	int size;
+	//Randomly set one of the axis to max so that it comes onto the screen.  Also random size between medium or big.
 	if (x > y)
 	{
 		x = (int)Point::xMax * pow(-1, (int)(rand() % 2 + 1));
+		size = ASTEROID_BIG_RADIUS;
 	}
 	else
 	{
 		y = (int)Point::yMax * pow(-1, (int)(rand() % 2 + 1));
+		size = ASTEROID_MEDIUM_RADIUS;
 	}
-	launchAsteroid(x, y, ASTEROID_BIG_RADIUS);
+	launchAsteroid(x, y, size);
 }
 
 void Astro::launchAsteroid(double x, double y, int size)
@@ -244,7 +250,6 @@ void Astro::launchAsteroid(double x, double y, int size)
 	double dx = (rand() % 2 + 1.0) * dxN;
 	static int id;
 	this->asteroids.push_back(Asteroid(x, y, dx, dy, id++, size, size));
-	//cout << "(" << x << "," << y << ") was sent to [" << dx << "," << dy << "]" << endl;
 }
 
 
