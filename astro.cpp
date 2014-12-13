@@ -198,10 +198,10 @@ void Astro::startGame()
 // *************************************************************************** 
 void Astro::shoot()
 {
-	int x = this->ship->getX();
-	int y = this->ship->getY();
-	double dx = this->ship->getDX();
-	double dy = this->ship->getDY();
+	int x = this->ship->getTip().getX();
+	int y = this->ship->getTip().getY();
+	double dx = this->ship->getDX() * 2;
+	double dy = this->ship->getDY() * 2;
 
 	//Randomly set one of the axis to max so that it comes onto the screen
 	static int id;

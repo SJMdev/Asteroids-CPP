@@ -32,6 +32,8 @@ void Ship::draw()
 	tip.addX(path.getPoint().getX());
 	tip.addY(path.getPoint().getY());
 
+	this->tip = tip;
+
 	left.addX(path.getPoint().getX());
 	left.addY(path.getPoint().getY());
 

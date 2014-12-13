@@ -17,8 +17,9 @@ public:
 	void rotateRight()	{ rotation -= ROTATION; };
 
 	void rocketBurst();
+	Point getTip() { return this->tip; }
 
 private:
 	int rotation;
+	Point tip;
 };
-

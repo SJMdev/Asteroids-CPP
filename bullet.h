@@ -6,8 +6,8 @@ class Bullet : public Moveable
 public:
 	Bullet(int x, int y, double dx, double dy, int rotation) : Moveable(x, y, dx, dy, true), movesCounter(0), radius(2)
 	{
-		double rotx = cos(deg2rad(rotation)) * 2;
-		double roty = sin(deg2rad(rotation)) * 2;
+		double rotx = cos(deg2rad(rotation)) * 4;
+		double roty = sin(deg2rad(rotation)) * 4;
 		this->path.setDx(rotx);
 		this->path.setDy(roty);
 		//std::cout << "Bullet was just created that has a wrap of: " << path.getWrap() << std::endl;
