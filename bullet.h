@@ -10,15 +10,14 @@ public:
 		double roty = sin(deg2rad(rotation)) * 4;
 		this->path.setDx(rotx);
 		this->path.setDy(roty);
-		//std::cout << "Bullet was just created that has a wrap of: " << path.getWrap() << std::endl;
 	};
-	~Bullet()					{};
+	~Bullet() {};
 
 	void draw();
 
 	void moveBullet();
-	bool readyToDie() { return this->movesCounter > (Point::xMax/2) - 10; }
-	int getRadius() { return radius; }
+	bool isReadyToDie() { return this->movesCounter > (Point::xMax/2) - 10; }
+	int getRadius() { return this->radius; }
 	int getMovesCounter() { return this->movesCounter; }
 private:
 	int movesCounter;

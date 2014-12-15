@@ -6,9 +6,6 @@
 #include <iostream>
 using namespace std;
 
-#define SHIP_RADIUS			10
-#define SHIP_SIDES			3
-
 #define SHIPLARGE_CIR_RAD	8
 #define SHIPSMALL_CIR_RAD	2
 
@@ -48,8 +45,6 @@ void Ship::draw()
 
 	drawLine(tip, right, 1.0, 0.0, 0.0);
 	drawLine(right, back, 1.0, 0.0, 0.0);
-
-	//	drawPolygon(path.getPoint(), SHIP_RADIUS, SHIP_SIDES, rotation);
 }
 
 // *************************************************************************** 
@@ -63,6 +58,4 @@ void Ship::rocketBurst()
 	
 	if (fabs(path.getDy() + dy) < MAX_SPEED)
 		path.setDy(path.getDy() + dy);
-
-//	cout << path.getDx() << ", " << path.getDy() << endl;
 }

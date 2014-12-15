@@ -7,6 +7,7 @@
 class Moveable
 {
 public:
+	//Constructor: Creates a moveable object in the center of the screen
 	Moveable(int x, int y, double dx, double dy, bool wrap) : path(0, 0)
 	{
 		path.setX((double)x);
@@ -17,6 +18,7 @@ public:
 		path.setWrap(wrap);
 	};
 
+	//Constructor: Creates a moveable object at the objectX and objectY location
 	Moveable(int x, int y, double dx, double dy, bool wrap, int objectX, int objectY) : path(objectX, objectY)
 	{
 		path.setX((double)x);
@@ -27,7 +29,7 @@ public:
 		path.setWrap(wrap);
 	};
 
-	~Moveable()							{};
+	~Moveable()	{};
 
 	int getX()							{ return (int)path.getX(); };
 	int getY()							{ return (int)path.getY(); };
@@ -38,11 +40,11 @@ public:
 	void setChange(double dx, double dy)	{ path.setDx(dx); path.setDy(dy); };
 
 	virtual void draw() = 0;
-	void move()							{ path++; };
+	void move()	{ path++; };
 	Path & getPath() { return this->path; }
+	virtual bool isReadyToDie() { return this->path.isDead(); }
 
 protected:
 	Path path;
-
 };
 

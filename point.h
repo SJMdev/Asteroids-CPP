@@ -48,8 +48,7 @@ public:
    void addY(double dy)      { setY(getY() + dy);     }
    void setCheck(bool f)    { check = f;             }
    void setWrap(bool f)     { 
-//	   std::cout << "Wrap = " << f << std::endl;
-	   wrap = f;
+   wrap = f;
    }
    void kill()              { dead = true;           }
    void resurrect()         { dead = false;          }

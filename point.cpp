@@ -1,7 +1,7 @@
 /***********************************************************************
  * Source File:
  *    Point : The representation of a position on the screen
- * Author:
+ * Author (edited by Clint Goodman):
  *    Br. Helfrich
  * Summary:
  *    Everything we need to know about a location on the screen, including
@@ -31,8 +31,6 @@ void Point::setX(double x)
 {
    assert(xMin < xMax);
 
-   //std::cout << "Wrap = " << wrap << std::endl;
-
    // wrap as necessary
    if (wrap)
    {
@@ -53,7 +51,6 @@ void Point::setX(double x)
    else
    {
 	   dead = true;
-	   //std::cout << "this is dead off the screen" << std::endl;
    }
 }
 
@@ -99,7 +96,6 @@ void Point::setY(double y)
    else
    {
 	   dead = true;
-	   //std::cout << "this is dead off the screen" << std::endl;
    }
    
 }

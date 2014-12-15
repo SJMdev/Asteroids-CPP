@@ -130,7 +130,7 @@ void Astro::moveItems()
 	//Bullets
 	if (!bullets.empty())
 	{
-		if (bullets[0].readyToDie())
+		if (bullets[0].isReadyToDie())
 		{
 			bullets.erase(bullets.begin());
 		}
@@ -146,7 +146,7 @@ void Astro::moveItems()
 	for (int i = 0; i < asteroids.size(); i++)
 	{
 		asteroids[i].move();
-		if (asteroids[i].readyToDie())
+		if (asteroids[i].isReadyToDie())
 		{
 			asteroidsToDelete.push_back(i);
 			asteroids[i].getPath().resurrect();

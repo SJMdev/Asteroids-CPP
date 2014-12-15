@@ -36,10 +36,14 @@ private:
 	void shoot();
 	void rocketBurst();
 
+	//Launches random asteroid from container side
 	void launchAsteroid();
+	//Launches asteroid from specific point
 	void launchAsteroid(double x, double y, int size);
 
 	void determineLuanchAsteroid();
+
+	//Game variables
 	int waitCounter;
 	int nextLaunchAsteroidTime;
 	int state;
